@@ -1,0 +1,19 @@
+{
+  "name": "fileshareplatform",
+  "version": "1.0.0",
+  "description": "A simple platform to upload, view, and manage files with user authentication, permission controls, and thumbnail generation.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "devstart": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Igomigo/FileSharePlatform.git"
+  },
+  "author": "Igomigo Fatai Victor",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Igomigo/FileSharePlatform/issues"
+  }
+}
