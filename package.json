@@ -15,5 +15,12 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Igomigo/FileSharePlatform/issues"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.3"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
   }
 }
