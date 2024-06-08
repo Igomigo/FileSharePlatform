@@ -21,22 +21,22 @@ A simple platform to upload, view, and manage files with user authentication, pe
 ### Installation
 
 1. Clone the repository
-   \`\`\`sh
+   ```sh
    git clone https://github.com/Igomigo/FileSharePlatform.git
-   \`\`\`
+   ```
 2. Install dependencies
-   \`\`\`sh
+   ```sh
    cd FileSharePlatform
    npm install
-   \`\`\`
+   ```
 3. Start the server
-   \`\`\`sh
+   ```sh
    npm start
-   \`\`\`
+   ```
 4. Start the server for development
-   \`\`\`sh
+   ```sh
    npm run devstart
-   \`\`\`
+   ```
 
 ## Technologies Used
 
