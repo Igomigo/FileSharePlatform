@@ -17,6 +17,8 @@ A simple platform to upload, view, and manage files with user authentication, pe
 
 - [Node.js](https://nodejs.org/)
 - [MongoDB](https://www.mongodb.com/)
+- [Redis](https://www.redis.io/)
+- [Image-thumbnail](https://www.npmjs.com/package/image-thumbnail)
 
 ### Installation
 
@@ -44,6 +46,10 @@ A simple platform to upload, view, and manage files with user authentication, pe
 - Express.js
 - MongoDB
 - JWT for authentication
+- Redis
+- Kue
+- Mongoose
+- Image-thumbnail
 
 ## Contributing
 

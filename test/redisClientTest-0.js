@@ -1,5 +1,5 @@
 // Tests the redis client class initial setup
-const redisClient = require("../utils/redis-new");
+const redisClient = require("../utils/redis");
 
 (async () => {
     //console.log(redisClient.isAlive());
