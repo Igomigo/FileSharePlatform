@@ -1,6 +1,6 @@
 # FileSharePlatform
 
-A simple platform to upload, view, and manage files with user authentication, permission controls, and thumbnail generation.
+A platform to upload, view, and manage files with user authentication, permission controls, and thumbnail generation. This project focuses on building a file management platform using technologies listed in the technologies section of this file. The platform allows users to upload and view files, with features like user authentication, file listing, uploading, permission changing, file viewing, and thumbnail generation. The project involves creating an API with Express, user authentication, data storage in MongoDB and Redis, and setting up a background worker. It also includes testing for various components and endpoints using tools like Mocha.
 
 ## Features
 
