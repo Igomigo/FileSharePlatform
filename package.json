@@ -2,10 +2,10 @@
   "name": "fileshareplatform",
   "version": "1.0.0",
   "description": "A simple platform to upload, view, and manage files with user authentication, permission controls, and thumbnail generation.",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js",
-    "devstart": "nodemon app.js"
+    "start": "node server.js",
+    "devstart": "nodemon server.js"
   },
   "repository": {
     "type": "git",

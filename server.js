@@ -1,10 +1,10 @@
 // Centralized point where the app is run
 const express = require("express");
 const morgan = require("morgan");
-const cookieParser = require("cookieParser");
 
 const routes = require("./routes/index");
 const dbConnect = require("./config/mongoClient");
+const router = require("./routes/index");
 
 // Create the express app
 const app = express();
@@ -18,8 +18,8 @@ dbConnect();
 // Middleware setup
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+app.use(router);
 
 // Run the server
 app.listen(PORT, () => {
