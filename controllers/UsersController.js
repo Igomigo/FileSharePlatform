@@ -13,7 +13,7 @@ exports.users = async (req, res) => {
     try {
         if (email && password) {
             // Check if user already exists
-            const exists = User.find({email: email});
+            const exists = await User.findOne({email: email});
             if (exists) {
                 throw new Error("User already exists");
             } else {
@@ -26,14 +26,15 @@ exports.users = async (req, res) => {
                 });
                 await user.save();
                 console.log(`User with email <${email}> created`);
-                res.status(200).json({
+                res.status(201).json({
                     status: "success",
                     message: "User created",
-                    email: email
+                    email: email,
+                    id: user._id
                 });
             }
         } else {
-            res.status(409).json({
+            res.status(400).json({
                 status: "failed",
                 message: "Wrong credentials"
             });
@@ -41,7 +42,7 @@ exports.users = async (req, res) => {
     } catch (err) {
         if (err.message.includes("exists")) {
             console.log(`User with email <${email}> already exists`);
-            res.json(403).json("User account already exists, create a new one");
+            res.json(409).json("User account already exists, create a new one");
         } else {
             console.error("An error occured", err);
             res.json(500).json("Error registering user");
