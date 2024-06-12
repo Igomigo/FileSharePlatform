@@ -1,8 +1,9 @@
 // contains all endpoints of the API
 
-const usersController = require("../controllers/UsersController");
+const UserController = require("../controllers/UserController");
 const express = require("express");
 const router = express.Router();
+const AuthController = require("../controllers/AuthController");
 
 // Test that the server responds with a get request
 router.get("/", (req, res) => {
@@ -10,7 +11,16 @@ router.get("/", (req, res) => {
 });
 
 // Post request to register a user
-router.post("/users", usersController.users);
+router.post("/users", UsersController.users);
+
+// Get request to sign in a user based on a token generated
+router.get("/connect", AuthController.getConnect);
+
+// Get request to sign-out the user based on the token
+router.get("/disconnect", AuthController.getDisconnect);
+
+// Get request to retrieve a user base on the token used
+router.get("/users/me", UserController.getMe);
 
 
 module.exports = router;
