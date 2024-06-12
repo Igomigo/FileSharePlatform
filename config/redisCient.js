@@ -1,7 +1,7 @@
 // Establishes a redis connection
 
 const redis = require("redis");
-const client = redis.createClient(6397);
+const client = redis.createClient();
 
 console.log("Establishing a connection to the redis server...");
 
