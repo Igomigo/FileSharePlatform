@@ -33,10 +33,15 @@ exports.users = async (req, res) => {
                     id: user._id
                 });
             }
-        } else {
+        } else if (!email) {
             res.status(400).json({
                 status: "failed",
-                message: "Wrong credentials"
+                message: "Email missing"
+            });
+        } else if (!password) {
+            res.status(400).json({
+                status: "failed",
+                message: "Password missing"
             });
         }
     } catch (err) {
