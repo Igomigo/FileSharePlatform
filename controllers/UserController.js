@@ -42,10 +42,10 @@ exports.users = async (req, res) => {
     } catch (err) {
         if (err.message.includes("exists")) {
             console.log(`User with email <${email}> already exists`);
-            res.json(409).json("User account already exists, create a new one");
+            res.status(409).json("User account already exists, create a new one");
         } else {
             console.error("An error occured", err);
-            res.json(500).json("Error registering user");
+            res.status(500).json("Error registering user");
         }
     }
 }

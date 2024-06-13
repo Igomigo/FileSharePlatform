@@ -11,16 +11,16 @@ router.get("/", (req, res) => {
 });
 
 // Post request to register a user
-router.post("/users", UsersController.users);
+router.post("/users", UserController.users);
 
 // Get request to sign in a user based on a token generated
-router.get("/connect", AuthController.getConnect);
+//router.get("/connect", AuthController.getConnect);
 
 // Get request to sign-out the user based on the token
-router.get("/disconnect", AuthController.getDisconnect);
+//router.get("/disconnect", AuthController.getDisconnect);
 
 // Get request to retrieve a user base on the token used
-router.get("/users/me", UserController.getMe);
+//router.get("/users/me", UserController.getMe);
 
 
 module.exports = router;
