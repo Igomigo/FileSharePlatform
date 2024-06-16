@@ -54,7 +54,7 @@ exports.getConnect = async (req, res) => {
 exports.getDisconnect = async (req, res) => {
     // sign-out the user based on the token
     try {
-        const token = req.headers.headers['x-token'];
+        const token = req.headers['x-token'];
         const key = `auth_${token}`;
         const userId = await client.get(key)
         if (!userId) {
@@ -64,6 +64,6 @@ exports.getDisconnect = async (req, res) => {
         res.status(204).json();
     } catch (err) {
         console.error(`${err}`);
-        return res.status(401).json(err.message);
+        return res.status(401).json({ Error: err.message });
     }
 }

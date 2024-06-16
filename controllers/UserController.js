@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const client = require("../config/redisCient");
 
 async function hashpwd(pwd) {
     // Returns hashed password
@@ -52,5 +53,22 @@ exports.users = async (req, res) => {
             console.error("An error occured", err);
             res.status(500).json("Error registering user");
         }
+    }
+}
+
+exports.getMe = async (req, res) => {
+    // retrieve the user based on the token used
+    try {
+        const token = req.headers['x-token'];
+        const key = `auth_${token}`;
+        const userId = await client.get(key)
+        if (!userId) {
+            throw new Error("Unauthorized");
+        }
+        const user = await User.findOne({ _id: userId });
+        res.status(200).json({ id: userId, email: user.email });
+    } catch (err) {
+        console.error(`${err}`);
+        return res.status(401).json({ Error: err.message });
     }
 }

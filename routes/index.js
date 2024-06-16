@@ -20,7 +20,7 @@ router.get("/connect", AuthController.getConnect);
 router.get("/disconnect", AuthController.getDisconnect);
 
 // Get request to retrieve a user base on the token used
-//router.get("/users/me", UserController.getMe);
+router.get("/users/me", UserController.getMe);
 
 
 module.exports = router;
