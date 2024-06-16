@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
 router.post("/users", UserController.users);
 
 // Get request to sign in a user based on a token generated
-//router.get("/connect", AuthController.getConnect);
+router.get("/connect", AuthController.getConnect);
 
 // Get request to sign-out the user based on the token
 //router.get("/disconnect", AuthController.getDisconnect);
