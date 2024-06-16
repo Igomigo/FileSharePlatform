@@ -58,17 +58,10 @@ exports.users = async (req, res) => {
 
 exports.getMe = async (req, res) => {
     // retrieve the user based on the token used
-    try {
-        const token = req.headers['x-token'];
-        const key = `auth_${token}`;
-        const userId = await client.get(key)
-        if (!userId) {
-            throw new Error("Unauthorized");
-        }
-        const user = await User.findOne({ _id: userId });
-        res.status(200).json({ id: userId, email: user.email });
-    } catch (err) {
-        console.error(`${err}`);
-        return res.status(401).json({ Error: err.message });
+    if (req.current_user) {
+        const user = req.current_user;
+        return res.status(200).json({ id: user._id, email: user.email });
+    } else {
+        return res.status(401).json({ Error: "Unauthorized" });
     }
 }
