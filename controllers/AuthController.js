@@ -39,7 +39,6 @@ exports.getConnect = async (req, res) => {
         const token = genToken();
         // Create the key to store the userId in redis
         const key = `auth_${token}`;
-        console.log(typeof key, typeof user._id);
         await storeInRedis(key, String(user._id));
         res.status(200).json({ token: token });
     } catch (err) {
@@ -49,5 +48,22 @@ exports.getConnect = async (req, res) => {
         }
         console.error(`${err}`);
         res.status(500).json(err.message);
+    }
+}
+
+exports.getDisconnect = async (req, res) => {
+    // sign-out the user based on the token
+    try {
+        const token = req.headers.headers['x-token'];
+        const key = `auth_${token}`;
+        const userId = await client.get(key)
+        if (!userId) {
+            throw new Error("Unauthorized");
+        }
+        await client.del(key);
+        res.status(204).json();
+    } catch (err) {
+        console.error(`${err}`);
+        return res.status(401).json(err.message);
     }
 }

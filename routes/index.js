@@ -17,7 +17,7 @@ router.post("/users", UserController.users);
 router.get("/connect", AuthController.getConnect);
 
 // Get request to sign-out the user based on the token
-//router.get("/disconnect", AuthController.getDisconnect);
+router.get("/disconnect", AuthController.getDisconnect);
 
 // Get request to retrieve a user base on the token used
 //router.get("/users/me", UserController.getMe);
