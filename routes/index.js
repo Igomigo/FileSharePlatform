@@ -25,7 +25,7 @@ router.get("/disconnect", getUserMiddleware, AuthController.getDisconnect);
 router.get("/users/me", getUserMiddleware, UserController.getMe);
 
 // Post request to create a new file
-router.post("/files", FilesController.postUpload);
+router.post("/files", getUserMiddleware, FilesController.postUpload);
 
 
 module.exports = router;
