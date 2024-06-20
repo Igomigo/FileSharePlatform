@@ -21,7 +21,7 @@ exports.users = async (req, res) => {
                 console.log("Creating user...");
                 const hashedPwd = await hashpwd(password);
                 const user = new User({
-                    username: username || "",
+                    username: username || null,
                     email: email,
                     password: hashedPwd
                 });

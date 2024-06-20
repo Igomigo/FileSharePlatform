@@ -21,7 +21,7 @@ async function getUser(req, res, next) {
         if (err.message.includes("unauthorized")) {
             return res.status(401).json({Error: err.message});
         }
-        res.status(500).json({Error: err.message});
+        return res.status(500).json({Error: err.message});
     }
 }
 

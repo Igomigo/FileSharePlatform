@@ -45,7 +45,6 @@ A platform to upload, view, and manage files with user authentication, permissio
 - Node.js
 - Express.js
 - MongoDB
-- JWT for authentication
 - Redis
 - Kue
 - Mongoose
