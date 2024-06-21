@@ -32,8 +32,9 @@ const fileSchema = new Schema({
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'User',
-        require: true
-    }
+        required: true
+    },
+    localPath: String
 }, {
     timestamps: true
 });
