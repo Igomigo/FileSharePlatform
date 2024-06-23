@@ -16,9 +16,9 @@ const PORT = process.env.PORT || 5000;
 dbConnect();
 
 // Middleware setup
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
 app.use(morgan("dev"));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(router);
 
 // Run the server
