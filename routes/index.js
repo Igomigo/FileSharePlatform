@@ -27,5 +27,11 @@ router.get("/users/me", getUserMiddleware, UserController.getMe);
 // Post request to create a new file
 router.post("/files", getUserMiddleware, FilesController.postUpload);
 
+// Get request to retrieve a file based on the id
+router.get("/files/:id", getUserMiddleware, FilesController.getShow);
+
+// Get request to retrieve all files from the database
+router.get("/files", getUserMiddleware, FilesController.getIndex);
+
 
 module.exports = router;

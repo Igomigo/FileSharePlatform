@@ -13,9 +13,7 @@ async function getUser(req, res, next) {
         req.token = token;
         const key = `auth_${token}`;
         const userId = await client.get(key);
-        console.log(`UserId: ${userId}`);
         const user = await User.findOne({ _id: userId });
-        console.log(`User: ${JSON.stringify(user)}`);
         req.current_user = user;
         next();
     } catch (err) {

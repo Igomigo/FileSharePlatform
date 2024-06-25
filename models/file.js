@@ -17,7 +17,7 @@ const fileSchema = new Schema({
     parentId: {
         type: Schema.Types.ObjectId,
         ref: 'File',
-        default: null
+        default: 0
     },
     isPublic: {
         type: Boolean,

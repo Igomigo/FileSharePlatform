@@ -69,3 +69,22 @@ exports.postUpload = async (req, res) => {
         return res.status(500).json({Error: err.message});
     }
 }
+
+exports.getShow = async (req, res) => {
+    // Retrieves a file based on the id params
+    try {
+        const current_user = req.current_user;
+        if (!current_user) {
+            return res.status(401).json({Error: "Unauthorized"});
+        }
+        const id = req.params.id;
+        const file = await File.findOne({ _id: id });
+        if (!file) {
+            return res.status(404).json({Error: "Not found"});
+        }
+        return res.status(200).json(file);
+    } catch (err) {
+        console.log(`${err}`);
+        return res.status(500).json({Error: err.message});
+    }
+}
