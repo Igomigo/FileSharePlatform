@@ -88,3 +88,50 @@ exports.getShow = async (req, res) => {
         return res.status(500).json({Error: err.message});
     }
 }
+
+exports.getIndex = async (req, res) => {
+    // Retrieves all files with pagination
+    try {
+        const current_user = req.current_user;
+        if (!current_user) {
+            return res.status(401).json({Error: "Unauthorized"});
+        }
+        const parentId = parseInt(req.query.parentId) || 0;
+        const page = parseInt(req.query.page) || 1;
+        const limit = 20;
+
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
+
+        const result = {};
+
+        // construct the next page
+        if (endIndex < await File.countDocuments({parentId: parentId})) {
+            result.next = {
+                page: page + 1,
+                limit: limit
+            }
+        }
+        // construct the previous page
+        if (startIndex > 0) {
+            result.previous = {
+                page: page - 1,
+                limit: limit
+            }
+        }
+        // request for paginated data
+        const files = await File.find({parentId: parentId})
+        .skip(startIndex)
+        .limit(limit)
+        .exec();
+
+        if (files.length === 0) {
+            return res.status(404).json({});
+        }
+        result.current = files;
+        return res.status(200).json(result);
+    } catch (err) {
+        console.error(`${err}`);
+        return res.status(500).json({Error: err.message});
+    }
+}
