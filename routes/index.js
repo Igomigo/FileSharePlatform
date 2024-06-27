@@ -7,31 +7,37 @@ const AuthController = require("../controllers/AuthController");
 const FilesController = require("../controllers/FilesController");
 const getUserMiddleware = require("../middleware/retrieveUser");
 
-// Test that the server responds with a get request
+// Test that the server responds with a GET request
 router.get("/", (req, res) => {
     res.send("\nWelcome to the FileSharePlatform API, let's show you around");
 });
 
-// Post request to register a user
+// POST request to register a user
 router.post("/users", UserController.users);
 
-// Get request to sign in a user based on a token generated
+// GET request to sign in a user based on a token generated
 router.get("/connect", AuthController.getConnect);
 
-// Get request to sign-out the user based on the token
+// GET request to sign-out the user based on the token
 router.get("/disconnect", getUserMiddleware, AuthController.getDisconnect);
 
-// Get request to retrieve a user base on the token used
+// GET request to retrieve a user base on the token used
 router.get("/users/me", getUserMiddleware, UserController.getMe);
 
 // Post request to create a new file
 router.post("/files", getUserMiddleware, FilesController.postUpload);
 
-// Get request to retrieve a file based on the id
+// GET request to retrieve a file based on the id
 router.get("/files/:id", getUserMiddleware, FilesController.getShow);
 
-// Get request to retrieve all files from the database
+// GET request to retrieve all files from the database
 router.get("/files", getUserMiddleware, FilesController.getIndex);
+
+// PUT request to update the isPublic field to the value "true"
+router.put("/files/:id/publish", getUserMiddleware, FilesController.putPublish);
+
+// PUT request to update the isPublic field to the value "false"
+router.put("/files/:id/unpublish", getUserMiddleware, FilesController.putUnPublish);
 
 
 module.exports = router;

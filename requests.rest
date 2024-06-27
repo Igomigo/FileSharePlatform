@@ -1,2 +1,2 @@
-GET http://localhost:5000/files?parentId=66777
+PUT http://localhost:5000/files/66777f93abb581e741b394a2/publish
 X-Token: e8d1c4c2-0eb4-4da1-b56f-a5185770a4a9

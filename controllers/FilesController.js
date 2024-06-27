@@ -162,3 +162,45 @@ exports.getIndex = async (req, res) => {
         return res.status(500).json({Error: err.message});
     }
 }
+
+exports.putPublish = async (req, res) => {
+    // Handles updating the isPublic field value to true
+    try {
+        const current_user = req.current_user;
+        if (!current_user) {
+            return res.json(401).json({Error: "Unauthorized"});
+        }
+        const id = req.params.id;
+        const file = await File.findOne({_id: id});
+        if (!file) {
+            return res.status(404).json({Error: "Not found"});
+        }
+        file.isPublic = true;
+        await file.save();
+        return res.status(200).json(file);
+    } catch (err) {
+        console.error(`${err}`);
+        return res.status(500).json({Error: err.message});
+    }
+}
+
+exports.putUnPublish = async (req, res) => {
+    // Handles updating the isPublic field value back to false
+    try {
+        const current_user = req.current_user;
+        if (!current_user) {
+            return res.json(401).json({Error: "Unauthorized"});
+        }
+        const id = req.params.id;
+        const file = await File.findOne({_id: id});
+        if (!file) {
+            return res.status(404).json({Error: "Not found"});
+        }
+        file.isPublic = false;
+        await file.save();
+        return res.status(200).json(file);
+    } catch (err) {
+        console.error(`${err}`);
+        return res.status(500).json({Error: err.message});
+    }
+}
