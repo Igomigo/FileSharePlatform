@@ -5,6 +5,7 @@ const File = require("../models/file");
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
+const mongoose = require("mongoose");
 
 
 exports.postUpload = async (req, res) => {
@@ -96,23 +97,38 @@ exports.getIndex = async (req, res) => {
         if (!current_user) {
             return res.status(401).json({Error: "Unauthorized"});
         }
-        const parentId = parseInt(req.query.parentId) || 0;
+        const parentId = req.query.parentId;
         const page = parseInt(req.query.page) || 1;
-        const limit = 20;
+        const limit = 2;
+
+        // Check to ensure that parentId is a valid mongoose objectId
+        if (parentId) {
+            const isValid = mongoose.Types.ObjectId.isValid(parentId);
+            if (!isValid) {
+                throw new Error("invalid parent id");
+            }
+        }
 
         const startIndex = (page - 1) * limit;
         const endIndex = page * limit;
 
         const result = {};
 
-        // construct the next page
-        if (endIndex < await File.countDocuments({parentId: parentId})) {
+        // construct the next page where parentId is not provided
+        if (!parentId && endIndex < await File.countDocuments()) {
             result.next = {
                 page: page + 1,
                 limit: limit
             }
         }
-        // construct the previous page
+        // Construct the next page where parentId is provided
+        if (parentId && endIndex < await File.countDocuments({parentId: parentId})) {
+            result.next = {
+                page: page + 1,
+                limit: limit
+            }
+        }
+        // construct the previous page for all cases
         if (startIndex > 0) {
             result.previous = {
                 page: page - 1,
@@ -120,10 +136,18 @@ exports.getIndex = async (req, res) => {
             }
         }
         // request for paginated data
-        const files = await File.find({parentId: parentId})
-        .skip(startIndex)
-        .limit(limit)
-        .exec();
+        let files = "";
+        if (!parentId) {
+            files = await File.find()
+            .skip(startIndex)
+            .limit(limit)
+            .exec();
+        } else {
+            files = await File.find({parentId: parentId})
+            .skip(startIndex)
+            .limit(limit)
+            .exec();
+        }
 
         if (files.length === 0) {
             return res.status(404).json({});
@@ -132,6 +156,9 @@ exports.getIndex = async (req, res) => {
         return res.status(200).json(result);
     } catch (err) {
         console.error(`${err}`);
+        if (err.message.includes("invalid")) {
+            return res.status(400).json({Error: "Invalid parent Id"});
+        }
         return res.status(500).json({Error: err.message});
     }
 }
