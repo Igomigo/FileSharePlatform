@@ -6,6 +6,7 @@ const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
 const mongoose = require("mongoose");
+const mime = require("mime-types");
 
 
 exports.postUpload = async (req, res) => {
@@ -199,6 +200,35 @@ exports.putUnPublish = async (req, res) => {
         file.isPublic = false;
         await file.save();
         return res.status(200).json(file);
+    } catch (err) {
+        console.error(`${err}`);
+        return res.status(500).json({Error: err.message});
+    }
+}
+
+exports.getFile = async (req, res) => {
+    // Retrives the data/content of a file with permission
+    try {
+        const current_user = req.current_user;
+        const id = req.params.id;
+        const file = await File.findOne({_id: id});
+        if (!file) {
+            console.log("First if triggered");
+            return res.status(404).json({Error: "Not found"});
+        }
+        if (file.isPublic === false && current_user._id !== file.userId) {
+            console.log("Second if triggered");
+            return res.status(404).json({Error: "Not found"});
+        }
+        if (file.type === "folder") {
+            console.log("Third if triggered");
+            return res.status(400).json(
+                {Error: "A folder doesn't have content"});
+        }
+        const mimeType = mime.lookup(file.name);
+        res.setHeader("Content-Type", mimeType);
+        const fileContent = Buffer.from(file.data, "base64");
+        return res.send(fileContent);
     } catch (err) {
         console.error(`${err}`);
         return res.status(500).json({Error: err.message});

@@ -39,5 +39,8 @@ router.put("/files/:id/publish", getUserMiddleware, FilesController.putPublish);
 // PUT request to update the isPublic field to the value "false"
 router.put("/files/:id/unpublish", getUserMiddleware, FilesController.putUnPublish);
 
+// GET request to return the data/content of a file
+router.get("/files/:id/data", getUserMiddleware, FilesController.getFile);
+
 
 module.exports = router;
